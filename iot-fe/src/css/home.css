@@ -1,0 +1,52 @@
+/* App.css */
+
+.container-fluid {
+    background-color: #f8f9fa;
+    min-height: 100vh;
+}
+
+.sidebar {
+    background-color: #ffffff;
+    padding: 20px;
+    border-right: 1px solid #dee2e6;
+}
+
+.sidebar h2 {
+    margin-bottom: 20px;
+}
+
+.nav-link {
+    font-weight: 500;
+}
+
+.card {
+    border: none;
+}
+
+.control-panel {
+    margin-top: 100px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.control-panel h3 {
+    margin-bottom: 20px;
+}
+
+.control-panel label {
+    margin-right: 10px;
+}
+
+h1, h2 {
+    margin-top: 20px;
+}
+
+/* App.css */
+
+.sensor-chart-container {
+    height: 400px; /* Adjust this value to increase/decrease the height */
+    margin-bottom: 20px; /* Add some space below the chart */
+}
+

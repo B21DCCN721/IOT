@@ -1,0 +1,9 @@
+.sidebar {
+  height: 100vh;
+  position: fixed;
+}
+
+.content {
+  margin-left: 200px;
+  padding: 20px;
+}

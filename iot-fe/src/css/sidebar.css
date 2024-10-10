@@ -1,0 +1,51 @@
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px; /* Adjust width as necessary */
+    height: 100%;
+    background-color: #343a40; /* Bootstrap dark color */
+    color: white;
+    transition: transform 0.3s ease;
+    transform: translateX(0);
+}
+.sidebar-header {
+    display: flex;
+    flex-direction: column; /* Align items vertically */
+    align-items: center; /* Center horizontally */
+    margin-bottom: 20px; /* Spacing below the header */
+}
+
+.sidebar-header h2 {
+    margin: 0; /* Remove default margin */
+    font-size: 1.5rem; /* Adjust font size */
+}
+.sidebar.closed {
+    transform: translateX(-100%); /* Hide the sidebar when closed */
+}
+
+.nav {
+    list-style-type: none;
+    padding: 0;
+}
+
+.nav-item {
+    margin: 10px 0;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    display: block;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Lighten on hover */
+}
+
+.nav-link.active {
+    background-color: rgba(0, 123, 255, 0.5); /* Active link background */
+}

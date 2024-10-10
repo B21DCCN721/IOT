@@ -1,0 +1,28 @@
+.icon {
+    margin-left: 10px;
+    font-size: 45px;
+    transition: all 0.3s ease; /* Smooth transition */
+}
+
+.rotate {
+    animation: spin 1s linear infinite; /* Spin animation for fan */
+}
+
+.active {
+    color: #007bff; /* Change color when AC is on */
+}
+
+.glow {
+    color: #ffc107; /* Change color for glowing light */
+    text-shadow: 0 0 5px #ffc107; /* Glowing effect */
+}
+
+/* Spin animation */
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
