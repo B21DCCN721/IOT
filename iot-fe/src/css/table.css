@@ -1,0 +1,13 @@
+.table {
+    width: 100%;
+    table-layout: fixed; /* Đảm bảo các cột có độ rộng bằng nhau */
+  }
+  
+  .table th, .table td {
+    text-align: center; /* Canh giữa nội dung */
+  }
+  
+  .table tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* Màu nền cho các dòng chẵn */
+  }
+  
