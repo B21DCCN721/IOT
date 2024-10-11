@@ -11,7 +11,9 @@ function App() {
     <Routes>
       <Route path='/' element={<Home/>} />
       <Route path='/datasensor' element={<Datasensor/>} />
+      <Route path='/datasensor/search' element={<Datasensor/>} />
       <Route path='/history' element={<History/>} />
+      <Route path='/history/search' element={<History/>} />
       <Route path='/profile' element={<Profile/>} />
       <Route path="*" element={<Navigate to="" />} />
     </Routes>

@@ -6,12 +6,13 @@
   }
   
   .search-container select {
-    padding: 12px; 
+    padding: 0px 12px 1px; 
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 15px; 
     height: 45px;
     width: 140px; 
+    margin-right: 5px;
   }
   .search-container input {
     padding: 12px;
@@ -20,10 +21,11 @@
     font-size: 15px; 
     height: 45px; 
     width: 240px;
+    margin-right: 5px;
   }
   
   .search-container button {
-    padding: 12px 20px;
+    padding: 9px 20px;
     background-color: #007bff;
     color: white;
     border: none;

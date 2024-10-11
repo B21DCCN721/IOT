@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import Sidebar from "../Sidebar";
@@ -7,37 +6,37 @@ import Search from "./components/Search";
 import "../../css/table.css";
 
 const Datasensor = () => {
-  const data = [
-    {
-      id: 1121,
-      nhietdo: 27.6,
-      doam: 43,
-      anhsang: 42,
-      thoigian: "2024-10-09 13:33:43",
-    },
-    {
-      id: 1120,
-      nhietdo: 27.6,
-      doam: 43,
-      anhsang: 36,
-      thoigian: "2024-10-09 13:33:42",
-    },
-    {
-      id: 1119,
-      nhietdo: 27.6,
-      doam: 43,
-      anhsang: 36,
-      thoigian: "2024-10-09 13:33:41",
-    },
-    {
-      id: 1118,
-      nhietdo: 27.6,
-      doam: 43,
-      anhsang: 42,
-      thoigian: "2024-10-09 13:33:40",
-    },
-  ];
-  const rowsPerPage = 1;
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/datasensor", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        setData(data);
+      } catch (err) {
+        console.error("Lỗi lấy dữ liệu:", err);
+      }
+      //finally là đoạn code luôn thực hiện dừ đúng hay lỗi
+      // } finally {
+      //   console.error('Lỗi lấy dữ liệu:', err);
+      // }
+    };
+    getData();
+  }, []);
+
+  const handleSearch = (data) => {
+    setData(data);
+  };
+
+  const rowsPerPage = 10;
   const [page, setPage] = useState(1);
   const [maxPagesToShow, setMaxPagesToShow] = useState(5);
 
@@ -64,7 +63,7 @@ const Datasensor = () => {
         <div className="col-md-10 container">
           <h1 className="mt-4">Datasensor</h1>
           <div className="container d-flex justify-content-end align-items-center">
-            <Search />
+            <Search onSearch={handleSearch} />
           </div>
           <div className="container d-flex align-items-center">
             <table class="table table-striped">
@@ -119,13 +118,13 @@ const Datasensor = () => {
               </select>
             </div>
             <div className="col-7">
-            <Stack spacing={2}>
-              <Pagination
-                count={totalPages}
-                page={page}
-                onChange={handlePageChange}
-              />
-            </Stack>
+              <Stack spacing={2}>
+                <Pagination
+                  count={totalPages}
+                  page={page}
+                  onChange={handlePageChange}
+                />
+              </Stack>
             </div>
           </div>
         </div>

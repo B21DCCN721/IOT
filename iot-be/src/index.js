@@ -1,4 +1,5 @@
 const express = require('express')
+const cors = require('cors')
 const app = express()
 const port = 5000
 const { connection, sequelize } = require('./config/connectDB')
@@ -7,6 +8,9 @@ const { mqttClient } = require("./config/mqttClient")
 //config req body
 app.use(express.json()); // for json
 app.use(express.urlencoded({ extended: true })); // for form data
+
+//cors
+app.use(cors());
 
 
 // ket noi db

@@ -1,29 +1,44 @@
 import React, { useState } from "react";
-import '../../../css/search.css';
+import { useNavigate } from "react-router-dom";
+import "../../../css/search.css";
 
-const Search = () => {
-  const [filterType, setFilterType] = useState("Nhiệt độ");
-  const [filterValue, setFilterValue] = useState("");
+const Search = ({ onSearch }) => {
+  const [query, setQuery] = useState("");
+  const [value, setValue] = useState("");
+  const navigate = useNavigate();
 
-  const handleFilterChange = (event) => {
-    setFilterType(event.target.value);
-  };
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    
+    const apiUrl = `http://localhost:5000/datasensor/search?q=${query}&value=${value}`;
+    // const apiUrl = new URL("http://localhost:5000/datasensor/search");
+    // apiUrl.searchParams.append("q", query);
+    // apiUrl.searchParams.append("value", value);
 
-  const handleInputChange = (event) => {
-    setFilterValue(event.target.value);
-  };
-
-  const handleSearch = () => {
-    console.log(`Lọc theo ${filterType} với giá trị: ${filterValue}`);
-  };
-  const handleSubmit = (event) => {
-    event.preventDefault(); // Ngăn chặn hành vi submit mặc định
+    try {
+      // Fetch the API data using async/await
+      const response = await fetch(apiUrl, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      // Handle the response data
+      onSearch(data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+    navigate(`/datasensor/search/?q=${query}&value=${value}`);
   };
 
   return (
     <div className="search-container">
-      <form>
-        <select value={filterType} onChange={handleFilterChange} name="q">
+      <form onSubmit={handleSubmit}>
+        <select name="q" onChange={(e) => setQuery(e.target.value)}>
           <option value="nhietdo">Nhiệt độ</option>
           <option value="doam">Độ ẩm</option>
           <option value="anhsang">Ánh sáng</option>
@@ -31,14 +46,10 @@ const Search = () => {
         <input
           name="value"
           type="text"
-          value={filterValue}
-          onChange={handleInputChange}
-          placeholder={`Nhập giá trị ${filterType.toLowerCase()}`}
+          placeholder="Nhập giá trị..."
+          onChange={(e) => setValue(e.target.value)}
         />
-
-        <button onClick={handleSubmit} type="submit">
-          Lọc
-        </button>
+        <button type="submit">Lọc</button>
       </form>
     </div>
   );
