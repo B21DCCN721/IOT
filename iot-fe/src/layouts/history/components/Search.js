@@ -24,7 +24,7 @@ const Search = ({ onSearch }) => {
     } catch (error) {
       console.log(error);
     }
-    navigate(`/history/search/?search_time=${query}`);
+    navigate(`/history/results/?search_time=${query}`);
   };
   return (
     <div>

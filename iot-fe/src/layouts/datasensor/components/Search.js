@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "../../../css/search.css";
 
 const Search = ({ onSearch }) => {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState("nhietdo");
   const [value, setValue] = useState("");
   const navigate = useNavigate();
 
@@ -27,12 +27,12 @@ const Search = ({ onSearch }) => {
         throw new Error("Network response was not ok");
       }
       const data = await response.json();
-      // Handle the response data
+
       onSearch(data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
-    navigate(`/datasensor/search/?q=${query}&value=${value}`);
+    navigate(`/datasensor/results/?q=${query}&value=${value}`);
   };
 
   return (

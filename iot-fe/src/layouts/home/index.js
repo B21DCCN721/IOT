@@ -6,15 +6,14 @@ import SensorChart from "./components/SensorChart";
 import ControlPanel from "./components/ControlPanel";
 
 const Home = () => {
-  const [cardData, setCardData] = useState(null);
+  const [cardData, setCardData] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    let isMounted = true; // Biến cờ để kiểm tra component còn mounted hay không
+    let isMounted = true;
     let intervalId;
 
-    // Định nghĩa hàm async để gọi API
     const fetchCardData = async () => {
       try {
         const response = await fetch('http://localhost:5000', {
@@ -23,8 +22,6 @@ const Home = () => {
             "Content-Type": "application/json",
           },
         });
-
-        console.log('Response object:', response); 
 
         if (!response.ok) {
           const errorText = await response.text();
@@ -61,39 +58,39 @@ const Home = () => {
     };
   }, []);
 
-  if (loading) {
-    return (
-      <div className="container-fluid">
-        <div className="row">
-          <div className="col-md-2">
-            <Sidebar />
-          </div>
-          <div className="col-md-10">
-            <h1 className="mt-4">Dashboard</h1>
-            <div>Loading...</div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <div className="container-fluid">
+  //       <div className="row">
+  //         <div className="col-md-2">
+  //           <Sidebar />
+  //         </div>
+  //         <div className="col-md-10">
+  //           <h1 className="mt-4">Dashboard</h1>
+  //           <div>Loading...</div>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
-  if (error) {
-    return (
-      <div className="container-fluid">
-        <div className="row">
-          <div className="col-md-2">
-            <Sidebar />
-          </div>
-          <div className="col-md-10">
-            <h1 className="mt-4">Dashboard</h1>
-            <div className="alert alert-danger" role="alert">
-              Lỗi: {error}
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  // if (error) {
+  //   return (
+  //     <div className="container-fluid">
+  //       <div className="row">
+  //         <div className="col-md-2">
+  //           <Sidebar />
+  //         </div>
+  //         <div className="col-md-10">
+  //           <h1 className="mt-4">Dashboard</h1>
+  //           <div className="alert alert-danger" role="alert">
+  //             Lỗi: {error}
+  //           </div>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="container-fluid">
@@ -129,7 +126,7 @@ const Home = () => {
               />
             </div>
           </div>
-          <div className="container text-center">
+          <div className="container">
             <div className="row">
               <div className="col-8">
                 <SensorChart />

@@ -1,19 +1,9 @@
-/* App.css */
 
 .container-fluid {
     background-color: #f8f9fa;
     min-height: 100vh;
 }
 
-.sidebar {
-    background-color: #ffffff;
-    padding: 20px;
-    border-right: 1px solid #dee2e6;
-}
-
-.sidebar h2 {
-    margin-bottom: 20px;
-}
 
 .nav-link {
     font-weight: 500;
@@ -42,8 +32,6 @@
 h1, h2 {
     margin-top: 20px;
 }
-
-/* App.css */
 
 .sensor-chart-container {
     height: 400px; /* Adjust this value to increase/decrease the height */

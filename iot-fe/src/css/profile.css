@@ -1,0 +1,32 @@
+.container-profile {
+    height: 100vh;
+    background-image: url('../static/img/bg.jpg');
+    background-size: cover;
+}
+
+.card-profile {
+    width: 30rem;
+    height: 15rem;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.card-profile-info {
+    flex: 1;
+}
+
+a {
+    color: red;
+}
+
+/* ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+} */
+
+li {
+    margin-bottom: 5px;
+}

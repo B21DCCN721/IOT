@@ -29,7 +29,7 @@ const searchData = async (req, res) => {
       order: [['id', 'DESC']],
       where: {
         [q]: {
-          [Op.gt]: parseFloat(value),
+          [Op.gte]: parseFloat(value),
         }
       }
     })

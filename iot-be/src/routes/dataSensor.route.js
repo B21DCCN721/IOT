@@ -1,10 +1,9 @@
 const express = require('express')
 const router = express.Router()
 
-const { getAllDataSensors, searchData, getLimitDataSensor } = require('../controllers/DataSensor.controller')
+const { searchData, getLimitDataSensor } = require('../controllers/DataSensor.controller')
 
-router.get('/limit', getLimitDataSensor)
 router.get('/search', searchData)
-router.get('/', getAllDataSensors)
+router.get('/',getLimitDataSensor)
 
 module.exports = router

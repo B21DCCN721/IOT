@@ -1,5 +1,6 @@
 
 const DataSensor = require('../models/DataSensor.model')
+const HistoryDevice = require('../models/HistoryDevice.model')
 const { client } = require('../config/mqttClient')
 
 const getNewData = async (req, res) => {
@@ -67,4 +68,32 @@ const controllDevice = async (req, res) => {
     }
 }
 
-module.exports = { getNewData, getDataChart, controllDevice }
+const getStatusDevice = async (req, res) => {
+    try {
+        const quatState = await HistoryDevice.findOne({
+          where: { thietbi: 'Quạt' },
+          order: [['thoigian', 'DESC']],
+        });
+    
+        const denState = await HistoryDevice.findOne({
+          where: { thietbi: 'Đèn' },
+          order: [['thoigian', 'DESC']],
+        });
+    
+        const dieuhoaState = await HistoryDevice.findOne({
+          where: { thietbi: 'Điều hòa' },
+          order: [['thoigian', 'DESC']],
+        });
+    
+        res.status(200).json({
+          quat: quatState ? quatState.trangthai === 'ON' : false,
+          den: denState ? denState.trangthai === 'ON' : false,
+          dieuhoa: dieuhoaState ? dieuhoaState.trangthai === 'ON' : false,
+        });
+      } catch (error) {
+        console.error('Error fetching device states:', error);
+        res.status(500).json({ error: 'Internal server error' });
+      }
+}
+
+module.exports = { getNewData, getDataChart, controllDevice, getStatusDevice }

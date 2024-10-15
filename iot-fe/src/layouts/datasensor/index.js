@@ -7,10 +7,13 @@ import "../../css/table.css";
 
 const Datasensor = () => {
   const [data, setData] = useState([]);
+  const [maxPagesToShow, setMaxPagesToShow] = useState(5);
+  const [limit, setLimit] = useState(50);
+  
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await fetch("http://localhost:5000/datasensor", {
+        const response = await fetch(`http://localhost:5000/datasensor/?limit=${limit}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -30,7 +33,7 @@ const Datasensor = () => {
       // }
     };
     getData();
-  }, []);
+  }, [limit]);
 
   const handleSearch = (data) => {
     setData(data);
@@ -38,7 +41,6 @@ const Datasensor = () => {
 
   const rowsPerPage = 10;
   const [page, setPage] = useState(1);
-  const [maxPagesToShow, setMaxPagesToShow] = useState(5);
 
   const totalRows = Math.min(data.length, rowsPerPage * maxPagesToShow);
   const totalPages = Math.ceil(totalRows / rowsPerPage);
@@ -52,6 +54,7 @@ const Datasensor = () => {
   const paginatedRows = data.slice(0, totalRows).slice(startIndex, endIndex);
   const handleMaxPageChange = (event) => {
     setMaxPagesToShow(parseInt(event.target.value, 10));
+    setLimit(parseInt(event.target.value * 10));
     setPage(1); // Khi thay đổi số hàng trên mỗi trang, reset về trang đầu
   };
   return (

@@ -16,6 +16,9 @@
     color: #ffc107; /* Change color for glowing light */
     text-shadow: 0 0 5px #ffc107; /* Glowing effect */
 }
+.form-switch, .label-name {
+    width: 73px;
+}
 
 /* Spin animation */
 @keyframes spin {

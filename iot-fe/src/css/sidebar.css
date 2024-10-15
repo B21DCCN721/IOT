@@ -2,26 +2,28 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 250px; /* Adjust width as necessary */
+    width: 256px; 
     height: 100%;
-    background-color: #343a40; /* Bootstrap dark color */
+    background-color: #343a40; 
     color: white;
     transition: transform 0.3s ease;
     transform: translateX(0);
+    padding: 20px;
 }
+
 .sidebar-header {
     display: flex;
-    flex-direction: column; /* Align items vertically */
-    align-items: center; /* Center horizontally */
-    margin-bottom: 20px; /* Spacing below the header */
+    flex-direction: column; 
+    align-items: center; 
+    margin-bottom: 20px; 
 }
 
 .sidebar-header h2 {
-    margin: 0; /* Remove default margin */
-    font-size: 1.5rem; /* Adjust font size */
+    margin: 0; 
+    font-size: 1.5rem; 
 }
 .sidebar.closed {
-    transform: translateX(-100%); /* Hide the sidebar when closed */
+    transform: translateX(-100%); 
 }
 
 .nav {
@@ -43,11 +45,12 @@
 }
 
 .nav-link:hover {
-    background-color: rgba(255, 255, 255, 0.1); /* Lighten on hover */
+    background-color: rgba(255, 255, 255, 0.1); 
     color: white;
 }
 
 .nav-link.active {
-    background-color: rgba(92, 178, 236, 0.5); /* Active link background */
+    background-color: rgba(92, 178, 236, 0.5); 
     color: white;
 }
+
