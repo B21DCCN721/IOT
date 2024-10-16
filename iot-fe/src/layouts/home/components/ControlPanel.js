@@ -7,6 +7,7 @@ const ControlPanel = () => {
   const [lightOn, setLightOn] = useState(false);
 
   useEffect(() => {
+    let intervalId;
     const getDeviceStatus = async () => {
       try {
         const response = await fetch("http://localhost:5000/status", {
@@ -28,6 +29,11 @@ const ControlPanel = () => {
       }
     };
     getDeviceStatus();
+    intervalId = setInterval(getDeviceStatus, 1000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
   }, []);
 
   const controlDevice = async (deviceId, newState) => {
@@ -51,17 +57,14 @@ const ControlPanel = () => {
   };
   const handleFanChange = () => {
     const newState = !fanOn;
-    setFanOn(!fanOn);
     controlDevice("quat", newState);
   };
   const handleAcChange = () => {
     const newState = !acOn;
-    setAcOn(!acOn);
     controlDevice("dieuhoa", newState);
   };
   const handleLightChange = () => {
     const newState = !lightOn;
-    setLightOn(!lightOn);
     controlDevice("den", newState);
   };
 
@@ -76,8 +79,8 @@ const ControlPanel = () => {
           >
             Quạt
           </label>
-          <i className='fas fa-fan icon'></i>
-          {/* <i className={`fas fa-fan icon ${fanOn ? "rotate" : ""}`}></i> */}
+          {/* <i className='fas fa-fan icon'></i> */}
+          <i className={`fas fa-fan icon ${fanOn ? "rotate" : ""}`}></i>
           <div className="form-check form-switch">
             <input
               className="form-check-input"
@@ -85,7 +88,7 @@ const ControlPanel = () => {
               id="fanSwitch"
               role="switch"
               checked={fanOn}
-              onChange={handleFanChange}
+              onClick={handleFanChange}
             />
 
             <label className="form-check-label" htmlFor="fanSwitch">
@@ -100,8 +103,8 @@ const ControlPanel = () => {
           >
             Điều hòa
           </label>
-          <i className='fas fa-snowflake icon'></i>
-          {/* <i className={`fas fa-snowflake icon ${acOn ? "active" : ""}`}></i> */}
+          {/* <i className='fas fa-snowflake icon'></i> */}
+          <i className={`fas fa-snowflake icon ${acOn ? "active" : ""}`}></i>
           <div className="form-check form-switch">
             <input
               className="form-check-input"
@@ -109,7 +112,7 @@ const ControlPanel = () => {
               id="acSwitch"
               role="switch"
               checked={acOn}
-              onChange={handleAcChange}
+              onClick={handleAcChange}
             />
             <label className="form-check-label" htmlFor="acSwitch">
               {acOn ? "On" : "Off"}
@@ -123,8 +126,8 @@ const ControlPanel = () => {
           >
             Đèn
           </label>
-          <i className='fas fa-lightbulb icon'></i>
-          {/* <i className={`fas fa-lightbulb icon ${lightOn ? "glow" : ""}`}></i> */}
+          {/* <i className='fas fa-lightbulb icon'></i> */}
+          <i className={`fas fa-lightbulb icon ${lightOn ? "glow" : ""}`}></i>
           <div className="form-check form-switch">
             <input
               className="form-check-input"
@@ -132,7 +135,7 @@ const ControlPanel = () => {
               id="lightSwitch"
               role="switch"
               checked={lightOn}
-              onChange={handleLightChange}
+              onClick={handleLightChange}
             />
             <label className="form-check-label" htmlFor="lightSwitch">
               {lightOn ? "On" : "Off"}
