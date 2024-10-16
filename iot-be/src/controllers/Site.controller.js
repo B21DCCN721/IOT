@@ -53,7 +53,7 @@ const controllDevice = async (req, res) => {
                 message = booleanState ? 'LED3_ON' : 'LED3_OFF'; 
                 break;
             default:
-                return res.status(400).json({ error: 'Invalid device ID' });
+                return res.status(400).json({ error: 'ID không hợp lệ' });
         }
         
 
@@ -85,14 +85,14 @@ const getStatusDevice = async (req, res) => {
           order: [['thoigian', 'DESC']],
         });
     
-        res.status(200).json({
+        res.json({
           quat: quatState ? quatState.trangthai === 'ON' : false,
           den: denState ? denState.trangthai === 'ON' : false,
           dieuhoa: dieuhoaState ? dieuhoaState.trangthai === 'ON' : false,
         });
       } catch (error) {
-        console.error('Error fetching device states:', error);
-        res.status(500).json({ error: 'Internal server error' });
+        console.error('Lỗi:', error);
+        res.status(500).json({ error: 'Lỗi lấy dữ liệu' });
       }
 }
 
