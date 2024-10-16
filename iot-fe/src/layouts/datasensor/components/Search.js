@@ -32,7 +32,7 @@ const Search = ({ onSearch }) => {
     } catch (error) {
       console.error("Error fetching data:", error);
     }
-    navigate(`/datasensor/results/?q=${query}&value=${value}`);
+    navigate(`/datasensor/results?q=${query}&value=${value}`);
   };
 
   return (
