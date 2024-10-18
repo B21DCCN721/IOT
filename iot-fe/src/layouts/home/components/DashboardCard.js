@@ -1,17 +1,16 @@
 import React from 'react';
-import '@fortawesome/fontawesome-free/css/all.min.css'; // Ensure Font Awesome is imported
 
 const DashboardCard = ({ title, value, bgColor, icon }) => {
   return (
     <div
-      className={`card text-white ${bgColor} mb-3`}
-      style={{ height: "150px" }}
+      className={`card text-white mb-3`}
+      style={{ height: "150px", backgroundColor: `${bgColor}`, }}
     >
       <div className="card-header" style={{ borderBottom: "none" }}>
         <h5 className="card-title d-flex align-items-center justify-content-between" style={{ fontSize: "1rem" }}>
           
           {title}
-          <i className={`fas ${icon} me-2`}></i> {/* Icon added here */}
+          <i className={`fas ${icon} me-2`}></i>
         </h5>
       </div>
       <div

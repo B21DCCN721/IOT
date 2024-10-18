@@ -58,39 +58,39 @@ const Home = () => {
     };
   }, []);
 
-  // if (loading) {
-  //   return (
-  //     <div className="container-fluid">
-  //       <div className="row">
-  //         <div className="col-md-2">
-  //           <Sidebar />
-  //         </div>
-  //         <div className="col-md-10">
-  //           <h1 className="mt-4">Dashboard</h1>
-  //           <div>Loading...</div>
-  //         </div>
-  //       </div>
-  //     </div>
-  //   );
-  // }
+  if (loading) {
+    return (
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-md-2">
+            <Sidebar />
+          </div>
+          <div className="col-md-10">
+            <h1 className="mt-4">Dashboard</h1>
+            <div>Loading...</div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
-  // if (error) {
-  //   return (
-  //     <div className="container-fluid">
-  //       <div className="row">
-  //         <div className="col-md-2">
-  //           <Sidebar />
-  //         </div>
-  //         <div className="col-md-10">
-  //           <h1 className="mt-4">Dashboard</h1>
-  //           <div className="alert alert-danger" role="alert">
-  //             Lỗi: {error}
-  //           </div>
-  //         </div>
-  //       </div>
-  //     </div>
-  //   );
-  // }
+  if (error) {
+    return (
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-md-2">
+            <Sidebar />
+          </div>
+          <div className="col-md-10">
+            <h1 className="mt-4">Dashboard</h1>
+            <div className="alert alert-danger" role="alert">
+              Lỗi: {error}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="container-fluid">
@@ -105,7 +105,7 @@ const Home = () => {
               <DashboardCard
                 title="Nhiệt Độ (°C)"
                 value={cardData.nhietdo}
-                bgColor="bg-danger"
+                bgColor="red"
                 icon="fa-temperature-high"
               />
             </div>
@@ -113,7 +113,7 @@ const Home = () => {
               <DashboardCard
                 title="Độ ẩm (%)"
                 value={cardData.doam}
-                bgColor="bg-info"
+                bgColor="blue"
                 icon="fa-tint"
               />
             </div>
@@ -121,7 +121,7 @@ const Home = () => {
               <DashboardCard
                 title="Ánh Sáng (Lux)"
                 value={cardData.anhsang}
-                bgColor="bg-warning"
+                bgColor="yellow"
                 icon="fa-lightbulb"
               />
             </div>

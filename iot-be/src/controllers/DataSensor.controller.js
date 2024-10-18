@@ -25,14 +25,42 @@ const getAllDataSensors = async (req, res) => {
 const searchData = async (req, res) => {
   try {
     const { q, value} = req.query
-    const dataSearch = await DataSensor.findAll({
-      order: [['id', 'DESC']],
-      where: {
-        [q]: {
-          [Op.gte]: parseFloat(value),
+    console.log(value);
+    
+    let dataSearch
+    if (q === 'search_time') {
+      if (value.length === 16) {
+        const startTime = value + ':00'
+        const endTime = value + ':59'
+        dataSearch = await DataSensor.findAll({
+          order: [['id', 'DESC']],
+          where: {
+            thoigian: {
+              [Op.between]: [startTime, endTime]
+            }
         }
+      })
+      } else {
+        dataSearch = await DataSensor.findAll({
+          order: [['id', 'DESC']],
+          where: {
+            thoigian: {
+              [Op.eq]: value
+            }
+          }
+        })
       }
-    })
+    } else {
+      const floatValue = parseFloat(value);
+      dataSearch = await DataSensor.findAll({
+        order: [['id', 'DESC']],
+        where: {
+          [q]: {
+            [Op.between]: [floatValue - 0.001, floatValue + 0.001]
+          }
+        }
+      })
+    }
     const formattedDataSearch = dataSearch.map(item => {
       const formattedTime = new Date(item.thoigian).toISOString().replace('T', ' ').slice(0, 19);
       return {

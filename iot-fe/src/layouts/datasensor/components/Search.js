@@ -9,7 +9,7 @@ const Search = ({ onSearch }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    
+
     const apiUrl = `http://localhost:5000/datasensor/search?q=${query}&value=${value}`;
     // const apiUrl = new URL("http://localhost:5000/datasensor/search");
     // apiUrl.searchParams.append("q", query);
@@ -28,6 +28,8 @@ const Search = ({ onSearch }) => {
       }
       const data = await response.json();
 
+      console.log(data);
+
       onSearch(data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -38,10 +40,18 @@ const Search = ({ onSearch }) => {
   return (
     <div className="search-container">
       <form onSubmit={handleSubmit}>
-        <select name="q" onChange={(e) => setQuery(e.target.value)}>
+        <label htmlFor="select-filter" className="me-2">
+          Lọc theo:
+        </label>
+        <select
+          name="q"
+          id="select-filter"
+          onChange={(e) => setQuery(e.target.value)}
+        >
           <option value="nhietdo">Nhiệt độ</option>
           <option value="doam">Độ ẩm</option>
           <option value="anhsang">Ánh sáng</option>
+          <option value="search_time">Thời gian</option>
         </select>
         <input
           name="value"

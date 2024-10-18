@@ -17,6 +17,7 @@ const Profile = () => {
             </div>
             <div className="card-profile-info">
               <h5>Đào Xuân Trí - B21DCCN721</h5>
+              <h5>Nhóm 05</h5>
               <ul >
                 <li >
                   <a  href="https://github.com/B21DCCN721/IOT.git" target="_blank" rel="noopener noreferrer">

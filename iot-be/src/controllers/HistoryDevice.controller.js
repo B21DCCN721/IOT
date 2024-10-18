@@ -23,12 +23,29 @@ const getAllHistoryDevice = async (req, res) => {
 const searchTime = async (req, res) => {
     try {
         const { search_time } = req.query
-        const date = new Date(search_time)
-        const dataSearch = await HistoryDevice.findAll({
+        // const date = new Date(search_time)
+        let dataSearch
+        if (search_time.length === 16) {
+          const startTime = search_time + ':00'
+          const endTime = search_time + ':59'
+          dataSearch = await HistoryDevice.findAll({
+            order: [['id', 'DESC']],
             where: {
-                thoigian: search_time
-            }
+              thoigian: {
+                [Op.between]: [startTime, endTime]
+              }
+          }
         })
+        } else {
+          dataSearch = await HistoryDevice.findAll({
+            order: [['id', 'DESC']],
+            where: {
+              thoigian: {
+                [Op.eq]: search_time
+              }
+            }
+          })
+        }
         const formattedDataSearch = dataSearch.map(item => {
             const formattedTime = new Date(item.thoigian).toISOString().replace('T', ' ').slice(0, 19);
             return {
