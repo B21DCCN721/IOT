@@ -7,8 +7,6 @@ import "../../css/table.css";
 
 const Datasensor = () => {
   const [data, setData] = useState([]);
-  // const [maxPagesToShow, setMaxPagesToShow] = useState(5);
-  // const [limit, setLimit] = useState(50);
   
   useEffect(() => {
     const getData = async () => {
@@ -27,10 +25,6 @@ const Datasensor = () => {
       } catch (err) {
         console.error("Lỗi lấy dữ liệu:", err);
       }
-      //finally là đoạn code luôn thực hiện dừ đúng hay lỗi
-      // } finally {
-      //   console.error('Lỗi lấy dữ liệu:', err);
-      // }
     };
     getData();
   }, []);
@@ -42,8 +36,6 @@ const Datasensor = () => {
 
   const [rowsPerPage, setrowsPerPage] = useState(5);
   const [page, setPage] = useState(1);
-
-  // const totalRows = Math.min(data.length, rowsPerPage * maxPagesToShow);
   const totalRows = data.length;
   const totalPages = Math.ceil(totalRows / rowsPerPage);
 
@@ -55,10 +47,8 @@ const Datasensor = () => {
   const endIndex = startIndex + rowsPerPage;
   const paginatedRows = data.slice(0, totalRows).slice(startIndex, endIndex);
   const handleMaxPageChange = (event) => {
-    // setMaxPagesToShow(parseInt(event.target.value, 10));
-    // setLimit(parseInt(event.target.value * 10));
     setrowsPerPage(parseInt(event.target.value, 10));
-    setPage(1); // Khi thay đổi số hàng trên mỗi trang, reset về trang đầu
+    setPage(1);
   };
   return (
     <div className="container-fluid">
@@ -96,7 +86,6 @@ const Datasensor = () => {
                 {paginatedRows.map((item, index) => (
                   <tr key={item.id}>
                     <th scope="row">{startIndex + index + 1}</th>{" "}
-                    {/* Sửa lại chỉ số ID */}
                     <td className="test">{item.nhietdo}</td>
                     <td>{item.doam}</td>
                     <td>{item.anhsang}</td>

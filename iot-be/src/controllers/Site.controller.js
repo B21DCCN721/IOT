@@ -27,14 +27,14 @@ const getDataChart = async (req, res) => {
         const formattedDataChart = dataChart.map(item => {
             const formattedTime = new Date(item.thoigian).toISOString().replace('T', ' ').slice(0, 19);
             return {
-              ...item.toJSON(),  // Chuyển đổi instance của Sequelize thành object
+              ...item.toJSON(),
               thoigian: formattedTime  
             };
         });
         res.json(formattedDataChart)
     } catch (error) {
         console.error(error)
-        res.status(500).json({ message : "Lỗi lấy dữ "})
+        res.status(500).json({ message : "Lỗi lấy dữ liệu"})
     }
 }
 const controllDevice = async (req, res) => {
@@ -96,4 +96,26 @@ const getStatusDevice = async (req, res) => {
       }
 }
 
-module.exports = { getNewData, getDataChart, controllDevice, getStatusDevice }
+const getCnt = async (req, res) => {
+    try {
+        const dataCnt = await new Promise((resolve, reject) => {
+            client.on('message', (topic, message) => {
+                if (topic === 'cnt') {
+                    const dataString = message.toString();
+                    const dataArray = dataString.split(':');
+                    const cnt = dataArray[1].trim();
+                    resolve(cnt);
+                }
+            });
+        });
+        res.json({
+            cntCb: dataCnt,
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Lỗi lấy dữ liệu" });
+    }
+};
+
+
+module.exports = { getNewData, getDataChart, controllDevice, getStatusDevice, getCnt }

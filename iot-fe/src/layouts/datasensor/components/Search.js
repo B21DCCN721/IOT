@@ -16,7 +16,6 @@ const Search = ({ onSearch }) => {
     // apiUrl.searchParams.append("value", value);
 
     try {
-      // Fetch the API data using async/await
       const response = await fetch(apiUrl, {
         method: "GET",
         headers: {

@@ -10,7 +10,7 @@ const getAllHistoryDevice = async (req, res) => {
         const formattedData = data.map(item => {
             const formattedTime = new Date(item.thoigian).toISOString().replace('T', ' ').slice(0, 19);
             return {
-              ...item.toJSON(),  // Chuyển đổi instance của Sequelize thành object
+              ...item.toJSON(),
               thoigian: formattedTime  
             };
         });
@@ -49,7 +49,7 @@ const searchTime = async (req, res) => {
         const formattedDataSearch = dataSearch.map(item => {
             const formattedTime = new Date(item.thoigian).toISOString().replace('T', ' ').slice(0, 19);
             return {
-              ...item.toJSON(),  // Chuyển đổi instance của Sequelize thành object
+              ...item.toJSON(),  
               thoigian: formattedTime  
             };
         });
@@ -61,15 +61,16 @@ const searchTime = async (req, res) => {
 }
 const getLimitHistory = async (req, res) => {
     try {
-      const { limit } = req.query
+      const { limit, page } = req.query
       const dataLimit = await HistoryDevice.findAll({
         limit: parseInt(limit),
+        offset: (parseInt(page) - 1) * parseInt(limit),
         order: [['id', 'DESC']],
       })
       const formattedDataLimit = dataLimit.map(item => {
         const formattedTime = new Date(item.thoigian).toISOString().replace('T', ' ').slice(0, 19);
         return {
-          ...item.toJSON(),  // Chuyển đổi instance của Sequelize thành object
+          ...item.toJSON(),
           thoigian: formattedTime  
         };
       });

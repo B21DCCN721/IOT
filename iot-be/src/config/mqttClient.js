@@ -12,6 +12,7 @@ client.on('connect', () => {
     console.log('Connected to MQTT broker');
     client.subscribe('data');
     client.subscribe('led');
+    client.subscribe('cnt');
 });
 
 function mqttClient() {

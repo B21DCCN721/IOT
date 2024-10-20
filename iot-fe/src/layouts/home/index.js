@@ -44,14 +44,8 @@ const Home = () => {
         }
       }
     };
-
-    // Gọi API lần đầu tiên khi component mount
     fetchCardData();
-
-    // Thiết lập polling: gọi API mỗi 10 giây
-    intervalId = setInterval(fetchCardData, 1000); // 1000ms = 10s
-
-    // Cleanup khi component unmount nó chỉ được gọi khi component unmount
+    intervalId = setInterval(fetchCardData, 1000);
     return () => {
       isMounted = false;
       clearInterval(intervalId);
