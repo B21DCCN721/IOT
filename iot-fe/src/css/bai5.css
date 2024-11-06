@@ -1,0 +1,24 @@
+.bai5 {
+    background-color: #817e7d;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    height: 150px;
+}
+/* @keyframes blinkTwice {
+    0%, 100% { opacity: 1; }
+    25%, 75% { opacity: 0; }
+  } */
+@keyframes blink {
+    0%, 100% {
+      color: black;
+    }
+    50% {
+      color: yellow;
+    }
+  }
+  
+.nhapnhay {
+  animation: blink 0.5s ease-in-out infinite;
+    color: #ffc107;
+}

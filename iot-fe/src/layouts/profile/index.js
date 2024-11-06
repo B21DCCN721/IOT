@@ -25,12 +25,12 @@ const Profile = () => {
                   </a>
                 </li>
                 <li >
-                  <a  href="https://api.postman.com/collections/33872423-efae5b60-a157-40b3-a36d-ffd059e7dc28?access_key=PMAT-01JA3DF0Q90NHXEEJW9ZAA3VRW" target="_blank" rel="noopener noreferrer">
+                  <a  href="https://api.postman.com/collections/33872423-cb2be9b3-8212-4682-9421-608fe3e6ef41?access_key=PMAT-01JASH66B3YCEJZY8630Q693YY" target="_blank" rel="noopener noreferrer">
                     API DOCS
                   </a>
                 </li>
                 <li >
-                  <a  href="#" target="_blank" rel="noopener noreferrer">
+                  <a  href="https://github.com/B21DCCN721/BaoCaoIoT/blob/main/B%C3%A1o%20c%C3%A1o%20IoT.pdf" target="_blank" rel="noopener noreferrer">
                     Link báo cáo
                   </a>
                 </li>

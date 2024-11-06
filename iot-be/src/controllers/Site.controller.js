@@ -96,26 +96,4 @@ const getStatusDevice = async (req, res) => {
       }
 }
 
-const getCnt = async (req, res) => {
-    try {
-        const dataCnt = await new Promise((resolve, reject) => {
-            client.on('message', (topic, message) => {
-                if (topic === 'cnt') {
-                    const dataString = message.toString();
-                    const dataArray = dataString.split(':');
-                    const cnt = dataArray[1].trim();
-                    resolve(cnt);
-                }
-            });
-        });
-        res.json({
-            cntCb: dataCnt,
-        });
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ message: "Lỗi lấy dữ liệu" });
-    }
-};
-
-
-module.exports = { getNewData, getDataChart, controllDevice, getStatusDevice, getCnt }
+module.exports = { getNewData, getDataChart, controllDevice, getStatusDevice }

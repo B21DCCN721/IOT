@@ -5,6 +5,7 @@ import Home from './layouts/home';
 import Datasensor from './layouts/datasensor';
 import History from './layouts/history';
 import Profile from './layouts/profile';
+import NewPage from './layouts/newpage';
 
 function App() {
   return (
@@ -16,6 +17,8 @@ function App() {
 
       <Route path='/history' element={<History/>} />
       <Route path='/history/results' element={<History/>} />
+
+      <Route path='/newpage' element={<NewPage/>} />
 
       <Route path='/profile' element={<Profile/>} />
       

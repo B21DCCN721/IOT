@@ -11,9 +11,7 @@ const SensorChart = () => {
   // Hàm khởi tạo biểu đồ
   const initializeChart = (ctx, initialData) => {
     const labels = initialData.map(item => item.thoigian.split(' ')[1]);
-    const temperatureData = initialData.map(item => item.nhietdo);
-    const humidityData = initialData.map(item => item.doam);
-    const lightData = initialData.map(item => item.anhsang);
+    const temperatureData = initialData.map(item => item.dobui);
 
     chartInstanceRef.current = new Chart(ctx, {
       type: 'line',
@@ -21,28 +19,12 @@ const SensorChart = () => {
         labels: labels,
         datasets: [
           {
-            label: 'Nhiệt độ (°C)',
+            label: 'Tốc độ gió (m/s)',
             data: temperatureData,
             borderColor: 'rgba(255, 99, 132, 1)',
             backgroundColor: 'rgba(255, 99, 132, 0.2)',
             fill: true,
             yAxisID: 'y-left',
-          },
-          {
-            label: 'Độ ẩm (%)',
-            data: humidityData,
-            borderColor: 'rgba(54, 162, 235, 1)',
-            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-            fill: true,
-            yAxisID: 'y-left',
-          },
-          {
-            label: 'Ánh sáng (lux)',
-            data: lightData,
-            borderColor: 'rgba(255, 206, 86, 1)',
-            backgroundColor: 'rgba(255, 206, 86, 0.2)',
-            fill: true,
-            yAxisID: 'y-right',
           },
         ],
       },
@@ -63,21 +45,8 @@ const SensorChart = () => {
             beginAtZero: true,
             ticks: {
               callback: function(value) {
-                return value + '°C / %';
+                return value + 'm/s';
               },
-            },
-          },
-          'y-right': {
-            type: 'linear',
-            position: 'right',
-            beginAtZero: true,
-            ticks: {
-              callback: function(value) {
-                return value + ' lux'; 
-              },
-            },
-            grid: {
-              drawOnChartArea: false,
             },
           },
         },
@@ -89,17 +58,13 @@ const SensorChart = () => {
   const updateChart = (newData) => {
     if (chartInstanceRef.current) {
       const labels = newData.map(item => item.thoigian.split(' ')[1]);
-      const temperatureData = newData.map(item => item.nhietdo);
-      const humidityData = newData.map(item => item.doam);
-      const lightData = newData.map(item => item.anhsang);
+      const temperatureData = newData.map(item => item.windspeed);
 
       // Cập nhật labels
       chartInstanceRef.current.data.labels = labels;
 
       // Cập nhật datasets
       chartInstanceRef.current.data.datasets[0].data = temperatureData;
-      chartInstanceRef.current.data.datasets[1].data = humidityData;
-      chartInstanceRef.current.data.datasets[2].data = lightData;
 
       // Cập nhật biểu đồ
       chartInstanceRef.current.update();

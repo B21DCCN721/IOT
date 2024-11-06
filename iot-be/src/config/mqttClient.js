@@ -12,8 +12,12 @@ client.on('connect', () => {
     console.log('Connected to MQTT broker');
     client.subscribe('data');
     client.subscribe('led');
-    client.subscribe('cnt');
+    client.subscribe('warning');
 });
+
+let prevLed1Status = null;
+let prevLed2Status = null;
+let prevLed3Status = null;
 
 function mqttClient() {
     client.on('message', async (topic, message) => {
@@ -30,29 +34,52 @@ function mqttClient() {
             const led1Status = dataArray[3].split(':')[1].trim();
             const led2Status = dataArray[4].split(':')[1].trim();
             const led3Status = dataArray[5].split(':')[1].trim();
+            const windspeed = parseInt(dataArray[6].split(':')[1].trim());
     
             try {
                 await DataSensor.create({
                     nhietdo: t,
                     doam: h,
                     anhsang: lightValue,
+                    windspeed: windspeed,
                 });
     
-                await HistoryDevice.create({
-                    thietbi: 'Quạt',
-                    trangthai: led1Status,
-                });
+                // await HistoryDevice.create({
+                //     thietbi: 'Quạt',
+                //     trangthai: led1Status,
+                // });
     
-                await HistoryDevice.create({
-                    thietbi: 'Đèn',
-                    trangthai: led2Status,
-                });
+                // await HistoryDevice.create({
+                //     thietbi: 'Đèn',
+                //     trangthai: led2Status,
+                // });
     
-                await HistoryDevice.create({
-                    thietbi: 'Điều hòa',
-                    trangthai: led3Status,
-                });
-    
+                // await HistoryDevice.create({
+                //     thietbi: 'Điều hòa',
+                //     trangthai: led3Status,
+                // });
+
+                if (prevLed1Status !== led1Status) {
+                    await HistoryDevice.create({
+                        thietbi: 'Quạt',
+                        trangthai: led1Status,
+                    });
+                    prevLed1Status = led1Status;
+                }
+                if (prevLed2Status !== led2Status) {
+                    await HistoryDevice.create({
+                        thietbi: 'Đèn',
+                        trangthai: led2Status,
+                    });
+                    prevLed2Status = led2Status;
+                }
+                if (prevLed3Status !== led3Status) {
+                    await HistoryDevice.create({
+                        thietbi: 'Điều hòa',
+                        trangthai: led3Status,
+                    });
+                    prevLed3Status = led3Status;
+                }
                 console.log('Data saved successfully to the database');
             } catch (error) {
                 console.error('Error saving data to the database:', error);

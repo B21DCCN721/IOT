@@ -5,6 +5,7 @@ import DashboardCard from "./components/DashboardCard";
 import SensorChart from "./components/SensorChart";
 import ControlPanel from "./components/ControlPanel";
 
+
 const Home = () => {
   const [cardData, setCardData] = useState({});
   const [loading, setLoading] = useState(true);
@@ -45,7 +46,7 @@ const Home = () => {
       }
     };
     fetchCardData();
-    intervalId = setInterval(fetchCardData, 1000);
+    intervalId = setInterval(fetchCardData, 2000);
     return () => {
       isMounted = false;
       clearInterval(intervalId);
@@ -99,7 +100,7 @@ const Home = () => {
               <DashboardCard
                 title="Nhiệt Độ (°C)"
                 value={cardData.nhietdo}
-                bgColor="red"
+                bgColor={parseFloat(cardData.nhietdo) < 30 ? "#f34f4c" : "#ef2305"}
                 icon="fa-temperature-high"
               />
             </div>
@@ -107,7 +108,7 @@ const Home = () => {
               <DashboardCard
                 title="Độ ẩm (%)"
                 value={cardData.doam}
-                bgColor="blue"
+                bgColor={parseFloat(cardData.doam) < 60 ? "#2fceee" : "#0dcaf0"}
                 icon="fa-tint"
               />
             </div>
@@ -115,7 +116,7 @@ const Home = () => {
               <DashboardCard
                 title="Ánh Sáng (Lux)"
                 value={cardData.anhsang}
-                bgColor="yellow"
+                bgColor={parseInt(cardData.anhsang) < 50 ? "#e7d915f0" : "#efc238"}
                 icon="fa-lightbulb"
               />
             </div>

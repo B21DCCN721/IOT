@@ -1,5 +1,5 @@
 const { Sequelize } = require("sequelize");
-const sequelize = new Sequelize("iot", "root", "123456", {
+const sequelize = new Sequelize("iot2", "root", "123456", {
   host: "localhost",
   dialect: "mysql",
   timezone: '+07:00',

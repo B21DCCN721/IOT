@@ -1,5 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import Sidebar from "../Sidebar";
@@ -8,11 +9,25 @@ import "../../css/table.css";
 
 const Datasensor = () => {
   const [data, setData] = useState([]);
+  const [limit, setLimit] = useState(5);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPage] = useState(0);
+  const [isSearch, setIsSearch] = useState(false);
+  const [query, setQuery] = useState("");
+
+  const [isSort, setIsSort] = useState(false);
+  const [sortType, setSortType] = useState("desc");
+  const [column, setColumn] = useState("");
+
 
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/history`, {
+        const urlSort = isSort ? `&_sort&column=${column}&type=${sortType}` : '';
+        const url = isSearch
+        ? `http://localhost:5000/history/search?search_time=${query}&limit=${limit}&page=${page}${urlSort}`
+        : `http://localhost:5000/history?limit=${limit}&page=${page}${urlSort}`;
+        const response = await fetch(url, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -22,31 +37,34 @@ const Datasensor = () => {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        setData(data);
+        setData(data.data);
+        setTotalPage(data.totalPages);
       } catch (err) {
         console.error("Lỗi lấy dữ liệu:", err);
       }
     };
     getData();
-  }, []);
-  const handleSearch = (data) => {
-    setData(data)
-    setPage(1); 
+  }, [limit, page, isSearch, query, isSort, column, sortType]);
+  const handleSearch = (query) => {
+    setIsSearch(true);
+    setQuery(query);
+    setPage(1);
   }
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [page, setPage] = useState(1);
-  const totalRows = data.length;
-  const totalPages = Math.ceil(totalRows / rowsPerPage);
+
+  const handleSort = (column) => {
+    setIsSort(true);
+    setColumn(column);
+    setSortType(prevSortType => prevSortType === 'asc' ? 'desc' : 'asc');
+    setPage(1);
+  }
 
   const handlePageChange = (event, newPage) => {
     setPage(newPage);
   };
 
-  const startIndex = (page - 1) * rowsPerPage;
-  const endIndex = startIndex + rowsPerPage;
-  const paginatedRows = data.slice(0, totalRows).slice(startIndex, endIndex);
+  const startIndex = (page - 1) * limit;
   const handleMaxPageChange = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
+    setLimit(parseInt(event.target.value, 10));
     setPage(1);
   };
   return (
@@ -75,11 +93,14 @@ const Datasensor = () => {
                   </th>
                   <th className="col-4" scope="col">
                     Thời gian
+                    <Link to={ `?_sort&column=thoigian&type=${sortType === "asc" ? "desc" : "asc"}` } onClick={() => handleSort('thoigian')}>
+                      {column === 'thoigian'? sortType === 'asc'?<i class="fa-solid fa-arrow-up-short-wide" style={{ marginLeft: "5px" }}></i>:<i class="fa-solid fa-arrow-down-wide-short" style={{ marginLeft: "5px" }}></i> :<i className="fa-solid fa-sort" style={{ marginLeft: "5px" }}></i>}
+                    </Link>
                   </th>
                 </tr>
               </thead>
               <tbody>
-                {paginatedRows.map((item, index) => (
+                {data.map((item, index) => (
                   <tr key={item.id}>
                     <th scope="row">{startIndex + index + 1}</th>{" "}
                     <td>{item.thietbi}</td>
@@ -97,7 +118,7 @@ const Datasensor = () => {
               </label>
               <select
                 id="maxPagesToShow"
-                value={rowsPerPage}
+                value={limit}
                 onChange={handleMaxPageChange}
                 className="form-select d-inline-block w-auto"
               >

@@ -5,25 +5,10 @@ import "../../../css/search.css";
 const Search = ({ onSearch }) => {
   const [query, setQuery] = useState(null);
   const navigate = useNavigate();
-  const apiUrl = `http://localhost:5000/history/search?search_time=${query}`;
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    try {
-      const response = await fetch(apiUrl, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      const data = await response.json();
-      onSearch(data);
-    } catch (error) {
-      console.log(error);
-    }
+    onSearch(query);
     navigate(`/history/results?search_time=${query}`);
   };
   return (

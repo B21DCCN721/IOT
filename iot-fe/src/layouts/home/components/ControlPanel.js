@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../../../css/controlPanel.css"; // Make sure to create this CSS file for styling
+import "../../../css/controlPanel.css";
 
 const ControlPanel = () => {
   const [fanOn, setFanOn] = useState(false);

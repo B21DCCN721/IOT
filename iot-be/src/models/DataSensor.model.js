@@ -18,7 +18,11 @@ const DataSensor = sequelize.define("DataSensor", {
     allowNull: false,
   },
   anhsang: {
-    type: DataTypes.FLOAT,
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  windspeed: {
+    type: DataTypes.INTEGER,
     allowNull: false,
   },
   thoigian: {

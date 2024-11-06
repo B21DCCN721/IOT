@@ -5,7 +5,7 @@ CREATE TABLE datasensor (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nhietdo FLOAT NOT NULL,
     doam FLOAT NOT NULL,
-    anhsang FLOAT NOT NULL,
+    anhsang INTEGER NOT NULL,
     thoigian DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 CREATE TABLE lichsu (
