@@ -15,6 +15,7 @@ const char* mqtt_server = "192.168.43.22";
 #define LED1 5
 #define LED2 4
 #define LED3 0
+#define LED4 2
 
 // Chân A0 cho cảm biến ánh sáng
 #define lightSensorPin A0 
@@ -24,9 +25,10 @@ DHT dht(DHTPIN, DHTTYPE);
 WiFiClient espClient;
 PubSubClient client(espClient);
 
-// Topic MQTT
+// Topic MQTT duy nhất
 const char* dataTopic = "data";
 const char* dataLed = "led";
+const char* dataWarning = "warning";
 
 // Hàm kết nối WiFi
 void setup_wifi() {
@@ -50,16 +52,35 @@ void callback(char* topic, byte* payload, unsigned int length) {
   if (String(topic) == dataLed) {
     if (message == "LED1_ON") {
       digitalWrite(LED1, HIGH);
+      // Serial.println("LED1 turned ON");
     } else if (message == "LED1_OFF") {
       digitalWrite(LED1, LOW);
+      // Serial.println("LED1 turned OFF");
     } else if (message == "LED2_ON") {
       digitalWrite(LED2, HIGH);
+      // Serial.println("LED2 turned ON");
     } else if (message == "LED2_OFF") {
       digitalWrite(LED2, LOW);
+      // Serial.println("LED2 turned OFF");
     } else if (message == "LED3_ON") {
       digitalWrite(LED3, HIGH);
+      // Serial.println("LED3 turned ON");
     } else if (message == "LED3_OFF") {
       digitalWrite(LED3, LOW);
+      // Serial.println("LED3 turned OFF");
+    }
+    else if (message == "LED4_ON") {
+      digitalWrite(LED4, HIGH);
+      // Serial.println("LED3 turned ON");
+    } else if (message == "LED4_OFF") {
+      digitalWrite(LED4, LOW);
+      // Serial.println("LED3 turned OFF");
+    }
+  } else if(String(topic) == dataWarning){
+    if (message == "canhbao") {
+      digitalWrite(LED4, HIGH);
+      delay(1000);
+      digitalWrite(LED4, LOW);
     }
   }
 }
@@ -71,6 +92,7 @@ void reconnect() {
       Serial.println("MQTT connected");
       client.subscribe(dataTopic);
       client.subscribe(dataLed);
+      client.subscribe(dataWarning);
     } else {
       Serial.print("Failed to connect to MQTT, rc=");
       Serial.println(client.state());
@@ -84,14 +106,16 @@ void setup() {
   setup_wifi();
   client.setServer(mqtt_server, 2003);
   client.setCallback(callback);
+  randomSeed(analogRead(0));
 
   dht.begin();
   
   pinMode(LED1, OUTPUT);
   pinMode(LED2, OUTPUT);
   pinMode(LED3, OUTPUT);
+  pinMode(LED4, OUTPUT);
 }
-
+int cnt = 0;
 void loop() {
   if (!client.connected()) {
     reconnect();
@@ -102,13 +126,25 @@ void loop() {
   float h = dht.readHumidity();
   float t = dht.readTemperature();
   
-  // Đọc giá trị cảm biến ánh sáng từ chân A0
+  //Đọc giá trị cảm biến ánh sáng từ chân A0
   int lightValue = analogRead(lightSensorPin);
 
+  int randomNumber = random(0, 101);
+  // float randomFloat = random(0, 10000) / 100.0;
+
+  if (randomNumber > 60) {
+    cnt++;
+    digitalWrite(LED4, HIGH);
+    delay(2000);
+    digitalWrite(LED4, LOW);
+  }
+  Serial.print("Random: ");
+  Serial.println(randomNumber);
   // Kiểm tra trạng thái LED
   String led1Status = digitalRead(LED1) == HIGH ? "ON" : "OFF";
   String led2Status = digitalRead(LED2) == HIGH ? "ON" : "OFF";
   String led3Status = digitalRead(LED3) == HIGH ? "ON" : "OFF";
+  String led4Status = digitalRead(LED4) == HIGH ? "ON" : "OFF";
 
   // In dữ liệu ra Serial Monitor
   // Serial.print("Temperature: ");
@@ -126,9 +162,14 @@ void loop() {
 
   // Gửi tất cả dữ liệu qua MQTT
   char dataBuffer[100];
-  sprintf(dataBuffer, "Nhiet do: %.2f, Do am: %.2f, Anh sang: %d, LED1: %s, LED2: %s, LED3: %s", 
-          t, h, lightValue, led1Status.c_str(), led2Status.c_str(), led3Status.c_str());
+  sprintf(dataBuffer, "Nhiet do: %.2f, Do am: %.2f, Anh sang: %d, LED1: %s, LED2: %s, LED3: %s, Bao cao: %d, LED4: %s", 
+          t, h, lightValue, led1Status.c_str(), led2Status.c_str(), led3Status.c_str(), randomNumber, led4Status.c_str());
   client.publish(dataTopic, dataBuffer);
+
+  // char dataBuffer1[100];
+  // sprintf(dataBuffer1, "cnt: %d", 
+  //         cnt);
+  // client.publish(dataCnt, dataBuffer1);
 
   // Dừng 2 giây trước khi gửi dữ liệu lần tiếp theo
   delay(2000);
